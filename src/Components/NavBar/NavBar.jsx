@@ -33,7 +33,6 @@ const NavBar = () => {
     { name: 'HOME', path: '/' },
     { name: 'SCORE BOARD', path: '/scoreboard' },
     { name: 'RESULT', path: '/search' },
-    { name: 'CONTACT', id: 'contact' } // Update to use `id` for the Contact section
   ];
 
   return (
