@@ -8,30 +8,26 @@ const NavBar = () => {
     () => localStorage.getItem('theme') === 'dark'
   );
 
-  // Handle dark mode and theme persistence
   useEffect(() => {
     document.body.classList.toggle('dark', darkMode);
     localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
-  // Scroll to Section
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      const topOffset = section.getBoundingClientRect().top + window.scrollY; // Get section position relative to viewport
+      const topOffset = section.getBoundingClientRect().top + window.scrollY; 
       window.scrollTo({
         top: topOffset,
-        behavior: 'smooth', // Smooth scrolling
+        behavior: 'smooth', 
       });
-      setIsMenuOpen(false); // Close menu for mobile view
+      setIsMenuOpen(false); 
     }
   };
 
-
-  // Navigation menu items
   const menus = [
     { name: 'HOME', path: '/' },
-    { name: 'RESULT', path: '/search' },
+    { name: 'RESULT', path: '/result' },
     { name: 'SCORE BOARD', path: '/scoretable' },
     { name: 'ADD RESULT', path: '/addresult' },
     { name: 'CART', path: '/cart' },

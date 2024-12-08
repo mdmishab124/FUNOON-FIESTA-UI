@@ -35,7 +35,7 @@ const Cart = () => {
                 {filteredResults.map((result) => (
                     <div
                         key={result._id}
-                        className="h-72 cart-card p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 transition-all"
+                        className="h-80 cart-card p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 transition-all"
                     >
                         <p className="text-gray-800 dark:text-gray-200">
                             <strong>Program:</strong> {result.programName}

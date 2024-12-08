@@ -29,7 +29,7 @@ const TopStudents = () => {
     }, [results]);
 
     return (
-        <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-6 rounded-lg shadow-lg text-center text-lg font-semibold transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
+        <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-6 rounded-lg shadow-lg text-center text-lg font-semibold transform transition-transform duration-300 hover:scale-105 hover:shadow-xl max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold mb-6 text-center text-gray-700 dark:text-gray-300">Star of the Fest</h2>
             <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
