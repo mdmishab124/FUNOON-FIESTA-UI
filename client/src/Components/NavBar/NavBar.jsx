@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Moon } from 'lucide-react';
 
@@ -26,13 +26,15 @@ const NavBar = () => {
       setIsMenuOpen(false); // Close menu for mobile view
     }
   };
-  
+
 
   // Navigation menu items
   const menus = [
     { name: 'HOME', path: '/' },
-    { name: 'SCORE BOARD', path: '/scoreboard' },
     { name: 'RESULT', path: '/search' },
+    { name: 'SCORE BOARD', path: '/scoretable' },
+    { name: 'ADD RESULT', path: '/addresult' },
+    { name: 'CART', path: '/cart' },
   ];
 
   return (
@@ -48,16 +50,16 @@ const NavBar = () => {
           <img src="../src/assets/icon-hamburger.svg" alt="Open menu" />
         )}
       </button>
-      
+
       {/* Logo */}
       <Link to="/" className="w-10 ml-7">
-        <img 
-          src={darkMode 
-            ? "../src/assets/img/lightlogo.png" 
-            : "../src/assets/img/darklogo.png" 
-          } 
-          alt="logo" 
-          className="w-full" 
+        <img
+          src={darkMode
+            ? "../src/assets/img/lightlogo.png"
+            : "../src/assets/img/darklogo.png"
+          }
+          alt="logo"
+          className="w-full"
         />
       </Link>
 
@@ -103,7 +105,7 @@ const NavBar = () => {
 
         {/* Dark Mode Toggle for Mobile */}
         <li className="md:hidden ml-5 my-6">
-          <button 
+          <button
             onClick={() => setDarkMode(!darkMode)}
             className="flex items-center space-x-2"
           >
@@ -115,7 +117,7 @@ const NavBar = () => {
 
       {/* Dark Mode Toggle for Desktop */}
       <div className="hidden md:block">
-        <button 
+        <button
           onClick={() => setDarkMode(!darkMode)}
           className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
         >
