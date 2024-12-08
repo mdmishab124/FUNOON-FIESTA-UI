@@ -38,7 +38,7 @@ const TopStudents = () => {
                             <th className="px-4 py-2 border-b">Rank</th>
                             <th className="px-4 py-2 border-b">Name</th>
                             <th className="px-4 py-2 border-b">Team</th>
-                            <th className="px-4 py-2 border-b">Points</th>
+                            <th className="px-4 py-2 border-b">Point</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@ const TopStudents = () => {
                             <tr
                                 key={`${student.studentName}-${student.teamName}`}
                                 className={`${index === 0
-                                    ? 'bg-gradient-to-r from-yellow-200 via-yellow-300 to-yellow-500 text-yellow-900 font-bold shadow-lg rounded-lg'
+                                    ? 'bg-gradient-to-r from-yellow-100 via-yellow-120 to-yellow-300 text-yellow-900 font-bold shadow-lg rounded-lg'
                                     : 'odd:bg-gray-100 dark:odd:bg-gray-700 even:bg-gray-50 dark:even:bg-gray-600'
                                     } hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors`}>
                                 <td className="px-4 py-4 border-b flex items-center gap-2">

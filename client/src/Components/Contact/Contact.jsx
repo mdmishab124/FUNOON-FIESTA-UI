@@ -1,4 +1,3 @@
-import React from 'react';
 import Email from '../../assets/img/email.png';
 import User from '../../assets/img/user.png';
 import Smartphone from '../../assets/img/smartphone.png';
