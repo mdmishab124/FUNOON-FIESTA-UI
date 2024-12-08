@@ -9,7 +9,6 @@ const AddResultForm = () => {
     const [formData, setFormData] = useState({
         studentName: '',
         programName: '',
-        place: '',
         teamName: '',
         category: '',
         stage: '',
@@ -55,15 +54,6 @@ const AddResultForm = () => {
                     name="studentName"
                     placeholder="Student Name"
                     value={formData.studentName}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                    type="text"
-                    name="place"
-                    placeholder="Place of student"
-                    value={formData.place}
                     onChange={handleChange}
                     required
                     className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const ResultSchema = new mongoose.Schema({
   studentName: { type: String, required: true },
-  place: { type: String, required: true },
   programName: { type: String, required: true },
   teamName: { type: String, required: true },
   category: { type: String ,required:true},
