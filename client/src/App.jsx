@@ -1,6 +1,7 @@
+// App.jsx
 import './index.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ProtectedRoute, AuthProvider } from './Components/AdminLogin/AdminLogin'; // Ensure this path is correct
+import { ProtectedRoute } from '../context/AuthContext'; 
 import Home from "./Pages/Home/Home";
 import Result from "./Pages/Result/Result";
 import ResultPage from "./Components/Result/ResultPage";
@@ -13,26 +14,24 @@ import Login from './Pages/Login/Login';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <CursorAnimation />
-        <NavBar />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path='/' element={<Home />} />
-          <Route path='/result' element={<Result />} />
-          <Route path="/result/:id" element={<ResultPage />} />
-          <Route path="/scoretable" element={<ScoreTable />} />
+    <BrowserRouter>
+      <CursorAnimation />
+      <NavBar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/result' element={<Result />} />
+        <Route path="/result/:id" element={<ResultPage />} />
+        <Route path="/scoretable" element={<ScoreTable />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path='/addresult' element={<AddResult />} />
-            <Route path='/cart' element={<CartPage />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  )
+        <Route element={<ProtectedRoute />}>
+          <Route path='/addresult' element={<AddResult />} />
+          <Route path='/cart' element={<CartPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

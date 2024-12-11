@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, LogIn, LogOut } from 'lucide-react';
-import { useAuth } from '../AdminLogin/AdminLogin';
-// import { useAuth } from '../AdminLogin/AdminLogin'; // Adjust the import path as needed
+import { useAuth } from '../../../context/AuthContext';
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

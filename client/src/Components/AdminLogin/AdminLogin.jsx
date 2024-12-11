@@ -1,57 +1,15 @@
-import React, { createContext, useState, useContext } from 'react';
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+// AdminLogin.js
+import React, { useState } from 'react';
 import { User, LockKeyhole, AlertCircle, EyeOff, Eye } from 'lucide-react';
-
-// Authentication Context (unchanged)
-const AuthContext = createContext(null);
-
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-
-  const login = (username, password) => {
-    if (username === 'admin' && password === '123') {
-      const userData = { username };
-      localStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-      return true;
-    }
-    return false;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-export const ProtectedRoute = () => {
-  const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
-};
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const { login } = useAuth();  // Destructure login from useAuth
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
