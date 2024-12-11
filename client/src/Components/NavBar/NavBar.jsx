@@ -79,7 +79,7 @@ const NavBar = () => {
       <ul
         className={`
           backdrop-blur-md 
-          md:pl-10 pr-28 md:static fixed 
+          md:pl-10  md:static fixed 
           duration-500 ease-linear top-0 
           md:h-auto h-screen z-10 
           ${!isMenuOpen ? "right-[-100%]" : "right-0"}
