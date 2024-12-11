@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Sun, Moon } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Sun, Moon, LogIn, LogOut } from 'lucide-react';
+import { useAuth } from '../AdminLogin/AdminLogin';
+// import { useAuth } from '../AdminLogin/AdminLogin'; // Adjust the import path as needed
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem('theme') === 'dark'
   );
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.toggle('dark', darkMode);
@@ -25,13 +29,25 @@ const NavBar = () => {
     }
   };
 
+  // Modified menus to conditionally show protected routes
   const menus = [
     { name: 'HOME', path: '/' },
     { name: 'RESULT', path: '/result' },
     { name: 'SCORE BOARD', path: '/scoretable' },
-    { name: 'ADD RESULT', path: '/addresult' },
-    { name: 'CART', path: '/cart' },
+    ...(user ? [
+      { name: 'ADD RESULT', path: '/addresult' },
+      { name: 'CART', path: '/cart' }
+    ] : [])
   ];
+
+  const handleAuthAction = () => {
+    if (user) {
+      logout();
+      navigate('/login');
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <nav className="flex items-center justify-between pt-8 px-6">
@@ -80,24 +96,26 @@ const NavBar = () => {
               duration-300
             "
           >
-            {menu.id ? (
-              <span
-                onClick={() => scrollToSection(menu.id)}
-                className="text-black dark:text-white cursor-pointer font-Barlow font-normal text-sm inline-block md:py-5 py-3"
-              >
-                {menu.name}
-              </span>
-            ) : (
-              <Link
-                to={menu.path}
-                className="text-black dark:text-white cursor-pointer font-Barlow font-normal text-sm inline-block md:py-5 py-3"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {menu.name}
-              </Link>
-            )}
+            <Link
+              to={menu.path}
+              className="text-black dark:text-white cursor-pointer font-Barlow font-normal text-sm inline-block md:py-5 py-3"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {menu.name}
+            </Link>
           </li>
         ))}
+
+        {/* Login/Logout Button for Mobile */}
+        <li className="md:hidden ml-5 my-6">
+          <button
+            onClick={handleAuthAction}
+            className="flex items-center space-x-2 text-black dark:text-white"
+          >
+            {user ? <LogOut className="mr-2" /> : <LogIn className="mr-2" />}
+            {user ? 'Logout' : 'Login'}
+          </button>
+        </li>
 
         {/* Dark Mode Toggle for Mobile */}
         <li className="md:hidden ml-5 my-6">
@@ -111,8 +129,24 @@ const NavBar = () => {
         </li>
       </ul>
 
-      {/* Dark Mode Toggle for Desktop */}
-      <div className="hidden md:block">
+      {/* Desktop Auth and Dark Mode Actions */}
+      <div className="hidden md:flex items-center space-x-4">
+        {/* Login/Logout Button */}
+        <button
+          onClick={handleAuthAction}
+          className="
+            flex items-center 
+            p-2 rounded-full 
+            hover:bg-gray-200 dark:hover:bg-gray-700 
+            transition-colors
+            text-black dark:text-white
+          "
+        >
+          {user ? <LogOut className="mr-2" /> : <LogIn className="mr-2" />}
+          {user ? '' : ''}
+        </button>
+
+        {/* Dark Mode Toggle */}
         <button
           onClick={() => setDarkMode(!darkMode)}
           className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"

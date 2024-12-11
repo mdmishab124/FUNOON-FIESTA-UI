@@ -75,7 +75,7 @@ const ScoreBoard = () => {
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white dark:bg-gray-900">
+          <tbody className="">
             {singlePrograms.length > 0 && renderProgramRows(singlePrograms)}
             {uniquePrograms.length > 0 && (
               <>
