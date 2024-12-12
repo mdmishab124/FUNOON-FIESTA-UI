@@ -27,12 +27,13 @@ const ResultPage = () => {
     }, [id, results]);
 
     const getMedalImage = (prize) => {
+
         switch (prize) {
-            case "First":
+            case "FIRST":
                 return Medal1;
-            case "Second":
+            case "SECOND":
                 return Medal3;
-            case "Third":
+            case "THIRD":
                 return Medal2;
             default:
                 return Medal1;
@@ -93,7 +94,7 @@ const ResultPage = () => {
 
                                 <div className="bg-gray-600 p-5 px-10 rounded-3xl mt-3 ml-4 md:ml-8 text-center md:text-left">
                                     <h1 className="text-xl font-semibold">{data.studentName}</h1>
-                                    {data.category === "Single" && (
+                                    {data.category === "SINGLE" && (
                                         <h2 className="text-lg text-gray-300">{data.teamName}</h2>
                                     )}
                                 </div>

@@ -4,14 +4,13 @@ import axios from "axios";
 const ResultsContext = createContext();
 const API = "http://localhost:3005/api/result";
 
-// eslint-disable-next-line react/prop-types
 export const ResultsProvider = ({ children }) => {
-    const [results, setResults] = useState([]); // Stores all results
+    const [results, setResults] = useState([]); // All results
     const [uniqueTeams, setUniqueTeams] = useState([]); // Unique team names
-    const [uniquePrograms, setUniquePrograms] = useState([]); // Unique general programs
-    const [groupPrograms, setGroupPrograms] = useState([]); // Group category programs
-    const [singlePrograms, setSinglePrograms] = useState([]); // Single category programs
-    const [topSingleParticipants, setTopSingleParticipants] = useState([]); // Top 3 single participants
+    const [uniquePrograms, setUniquePrograms] = useState([]); // General programs
+    const [groupPrograms, setGroupPrograms] = useState([]); // Group programs
+    const [singlePrograms, setSinglePrograms] = useState([]); // Single programs
+    const [topSingleParticipants, setTopSingleParticipants] = useState([]); // Top single participants
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -19,13 +18,13 @@ export const ResultsProvider = ({ children }) => {
                 const response = await axios.get(API);
                 const data = response.data;
 
-                setResults(data); // Update results state
+                setResults(data); // Update results
 
                 // Extract unique team names
                 const teams = [...new Set(data.map((result) => result.teamName.toUpperCase()))];
                 setUniqueTeams(teams);
 
-                // Extract unique programs and categorize them
+                // Extract and categorize programs
                 const programs = [...new Set(data.map((result) => result.programName.toUpperCase()))];
                 const groupPrograms = programs.filter((program) =>
                     data.some(
@@ -34,24 +33,28 @@ export const ResultsProvider = ({ children }) => {
                             result.category.toUpperCase() === "GROUP"
                     )
                 );
-                const singlePrograms = programs.filter(
-                    (program) =>
-                        data.filter((result) => result.programName.toUpperCase() === program).length === 1
+                const singlePrograms = programs.filter((program) =>
+                    data.some(
+                        (result) =>
+                            result.programName.toUpperCase() === program &&
+                            result.category.toUpperCase() === "SINGLE"
+                    )
                 );
                 const generalPrograms = programs.filter(
-                    (program) => !groupPrograms.includes(program) && !singlePrograms.includes(program)
+                    (program) =>
+                        !groupPrograms.includes(program) && !singlePrograms.includes(program)
                 );
 
                 setUniquePrograms(generalPrograms);
                 setGroupPrograms(groupPrograms);
                 setSinglePrograms(singlePrograms);
 
-                // Extract top 3 single program participants
-                const singleParticipants = data
+                // Extract top 3 single participants
+                const topParticipants = data
                     .filter((result) => result.category.toUpperCase() === "SINGLE")
-                    .sort((a, b) => b.points - a.points) // Sort by points in descending order
+                    .sort((a, b) => b.points - a.points) // Sort by points (descending)
                     .slice(0, 3); // Take top 3
-                setTopSingleParticipants(singleParticipants);
+                setTopSingleParticipants(topParticipants);
             } catch (error) {
                 console.error("Error fetching results:", error);
             }
@@ -60,6 +63,7 @@ export const ResultsProvider = ({ children }) => {
         fetchResults();
     }, []);
 
+    // Delete a result by ID
     const deleteResult = async (id) => {
         try {
             await axios.delete(`${API}/${id}`);
@@ -69,6 +73,7 @@ export const ResultsProvider = ({ children }) => {
         }
     };
 
+    // Edit a result by ID
     const editResult = async (id, updatedData) => {
         try {
             const response = await axios.put(`${API}/${id}`, updatedData);

@@ -36,13 +36,13 @@ const ScoreBoard = () => {
                 <td key={team} className="px-4 py-3 text-center border">
                   <span>
                     {points}{" "}
-                    {prizes.includes("First") && (
+                    {prizes.includes("FIRST") && (
                       <span className="text-yellow-500">(🥇)</span>
                     )}
-                    {prizes.includes("Second") && (
+                    {prizes.includes("SECOND") && (
                       <span className="text-gray-500">(🥈)</span>
                     )}
-                    {prizes.includes("Third") && (
+                    {prizes.includes("THIRD") && (
                       <span className="text-orange-400">(🥉)</span>
                     )}
                   </span>

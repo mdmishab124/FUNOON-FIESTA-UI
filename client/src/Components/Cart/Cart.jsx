@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useResults } from "../../../context/ResultsContext";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,10 @@ const Cart = () => {
     const { results, deleteResult } = useResults();
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setSearchQuery("")
+    }, [deleteResult, results])
 
     const filteredResults = results.filter((result) =>
         result.programName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -80,8 +84,8 @@ const Cart = () => {
             </div>
 
             {filteredResults.length === 0 && (
-                <p className="text-center text-gray-500 dark:text-gray-400 mt-6">
-                    No programs found.
+                <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
+                    No results found.
                 </p>
             )}
         </div>
