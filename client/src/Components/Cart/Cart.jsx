@@ -6,9 +6,12 @@ const Cart = () => {
     const { results, deleteResult,fetchResults } = useResults();
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         fetchResults();
+    }, []);
+    
+    useEffect(() => { 
         setSearchQuery("");
     }, [deleteResult, results]);
 
