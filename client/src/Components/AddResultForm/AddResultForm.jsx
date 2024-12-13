@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Award, User, Trophy, Star, ListChecks, Grid, Clipboard } from 'lucide-react';
-
-const API_URL = 'http://localhost:3005/api/result';
+import { API_URL } from '../../../context/ResultsContext';
 
 const AddResultForm = () => {
     const { state } = useLocation();
@@ -20,22 +19,27 @@ const AddResultForm = () => {
 
     const navigate = useNavigate();
 
+    // Prefill form data if editing an existing result
     useEffect(() => {
         if (state && state.result) {
             setFormData(state.result);
         }
     }, [state]);
 
+    // Handle form input changes
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if (state && state.result) {
+                // Update existing result
                 await axios.put(`${API_URL}/${state.result._id}`, formData);
             } else {
+                // Add new result
                 await axios.post(API_URL, formData);
             }
             navigate("/cart");
@@ -45,7 +49,7 @@ const AddResultForm = () => {
     };
 
     return (
-        <div className="min-h-screen   px-4 py-8 sm:px-6 md:px-12">
+        <div className="min-h-screen px-4 py-8 sm:px-6 md:px-12">
             <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 md:p-8">
                 {/* Header Section */}
                 <div className="text-center mb-6">
@@ -88,7 +92,7 @@ const AddResultForm = () => {
                         />
                     </div>
 
-                    {/* Dropdowns for team, category, stage, prize, grade, and points */}
+                    {/* Dropdowns */}
                     {[
                         { name: 'teamName', icon: <Grid className="w-5 h-5 text-gray-400" />, options: ['KAMAR', 'HILAL', 'HIJAS', 'LULU', 'HAIKI', 'MARAM'] },
                         { name: 'category', icon: <ListChecks className="w-5 h-5 text-gray-400" />, options: ['SINGLE', 'GROUP'] },
@@ -98,9 +102,7 @@ const AddResultForm = () => {
                         { name: 'points', icon: <Star className="w-5 h-5 text-gray-400" />, options: ['1', '2', '4', '6', '7', '8', '9', '10', '11', '13', '15', '20', '25'] },
                     ].map((field) => (
                         <div key={field.name} className="relative">
-                            {field.icon && (
-                                <div className="absolute left-3 top-3">{field.icon}</div>
-                            )}
+                            <div className="absolute left-3 top-3">{field.icon}</div>
                             <select
                                 name={field.name}
                                 value={formData[field.name]}
@@ -110,7 +112,7 @@ const AddResultForm = () => {
                                 focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none"
                             >
                                 <option value="">{`Select ${field.name.charAt(0).toUpperCase() + field.name.slice(1)}`}</option>
-                                {field.options.map(option => (
+                                {field.options.map((option) => (
                                     <option key={option} value={option}>{option}</option>
                                 ))}
                             </select>

@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useResults } from "../../../context/ResultsContext";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-    const { results, deleteResult } = useResults();
+    const { results, deleteResult,fetchResults } = useResults();
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchResults();
+    }, []);
+    
+    useEffect(() => { 
+        setSearchQuery("");
+    }, [deleteResult, results]);
 
     const filteredResults = results.filter((result) =>
         result.programName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -13,6 +21,13 @@ const Cart = () => {
 
     const handleEdit = (result) => {
         navigate("/addresult", { state: { result } });
+    };
+
+    const handleDelete = (id) => {
+        const confirmed = window.confirm("Are you sure you want to delete this result?");
+        if (confirmed) {
+            deleteResult(id);
+        }
     };
 
     return (
@@ -63,7 +78,7 @@ const Cart = () => {
                         </p>
                         <div className="button-group mt-4 space-x-4">
                             <button
-                                onClick={() => deleteResult(result._id)}
+                                onClick={() => handleDelete(result._id)}
                                 className="delete-btn bg-red-500 text-white p-3 rounded-md hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none transition-colors"
                             >
                                 Delete
@@ -80,8 +95,8 @@ const Cart = () => {
             </div>
 
             {filteredResults.length === 0 && (
-                <p className="text-center text-gray-500 dark:text-gray-400 mt-6">
-                    No programs found.
+                <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
+                    No results found.
                 </p>
             )}
         </div>
